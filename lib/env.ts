@@ -1,6 +1,8 @@
 import { z } from "zod";
 
 const envVariables = z.object({
+  NEXT_PUBLIC_APP_URL: z.string(),
+
   UPSTASH_REDIS_REST_TOKEN: z.string(),
   UPSTASH_REDIS_REST_URL: z.string(),
 
@@ -16,7 +18,6 @@ const envVariables = z.object({
   NEXTAUTH_SECRET: z.string(),
   GITHUB_SECRET: z.string(),
   GITHUB_ID: z.string(),
-  NEXTAUTH_URL: z.string(),
 });
 
 try {
