@@ -68,3 +68,9 @@ export class Analytics {
 }
 
 export const analytics = new Analytics();
+export type RetrieveDaysReturnType = {
+  date: string;
+  events: {
+    [x: string]: number;
+  }[];
+}[];

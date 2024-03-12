@@ -3,6 +3,8 @@
 import { signIn, signOut } from "next-auth/react";
 
 import { Button } from "@/components/ui/button";
+import AnalyticsDashboard from "@/components/dashboard/analytics-dashboard";
+import { mockTracker } from "@/config/mock";
 
 export default function Home() {
   return (
@@ -24,6 +26,7 @@ export default function Home() {
       >
         signout
       </Button>
+      <AnalyticsDashboard tracks={mockTracker} trackingDays={7} />
     </main>
   );
 }
