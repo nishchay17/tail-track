@@ -3,10 +3,10 @@ import { redirect } from "next/navigation";
 import { NavBar } from "@/components/nav/dashboard-nav";
 import { DashboardNav } from "@/components/nav/side-nav";
 import { sideNavLinks } from "@/config/links";
-import { getCurrentUser } from "@/lib/auth";
+import { getCurrentUserSession } from "@/lib/auth";
 
 async function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const user = await getCurrentUser();
+  const user = await getCurrentUserSession();
 
   if (!user) {
     redirect("/");

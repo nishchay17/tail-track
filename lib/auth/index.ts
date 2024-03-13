@@ -2,7 +2,7 @@
 
 import { auth } from "./auth-options";
 
-export async function getCurrentUser() {
+export async function getCurrentUserSession() {
   const session = await auth();
   return session?.user;
 }
