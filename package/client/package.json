@@ -9,7 +9,7 @@
     "dist"
   ],
   "scripts": {
-    "start": "npx ts-node src/index",
+    "start": "npx ts-node src/main",
     "build": "tsup",
     "test": "jest"
   },
