@@ -1,5 +1,6 @@
 import { cn } from "@/lib/utils";
 import { RetrieveDaysReturnType } from "@/util/analytics";
+import DashboardGraph from "./dashboard-graph";
 
 type dataPoint = {
   date: string;
@@ -65,19 +66,23 @@ function AnalyticsDashboard({
       name: "Total Trackers",
       count: totalTracks,
       custom: false,
-    },
-    {
-      name: "Avg Trackers",
-      count: avgTrackersPerDay,
-      custom: false,
+      data: tracksByDate,
     },
     ...Object.keys(metaData).map((key) => {
       return {
         name: key,
         count: metaData[key].reduce((acc, curr) => acc + curr.count, 0),
         custom: true,
+        data: metaData[key],
       };
     }),
+  ];
+  const statsData = [
+    {
+      name: "Average Trackers Per Day",
+      count: avgTrackersPerDay,
+      custom: false,
+    },
   ];
 
   return (
@@ -85,16 +90,38 @@ function AnalyticsDashboard({
       <section>
         <h1 className="text-3xl font-semibold mb-4">Dashboard</h1>
         <div className="flex gap-4">
-          {cardData.map((it) => (
+          {statsData.map((it) => (
             <div
               key={it.name}
               className={cn(
                 "rounded-lg border-2 min-w-[200px] border-white/30 px-9 py-5",
-                it.custom ? "border-yellow-500" : ""
+                it.custom ? "border-violet-500" : ""
               )}
             >
               <p className="text-lg mb-2 capitalize">{it.name}</p>
               <p className="text-4xl font-semibold">{it.count}</p>
+            </div>
+          ))}
+        </div>
+        <div className="mt-4 grid grid-cols-2 gap-4">
+          {cardData.map((it) => (
+            <div
+              key={it.name}
+              className={cn(
+                "rounded-lg border-2 min-w-[200px] border-white/30 px-9 py-6 pl-1",
+                it.custom ? "border-violet-500" : ""
+              )}
+            >
+              <p className="text-2xl capitalize mb-5 pl-9">
+                {it.name}: <span className="font-semibold">{it.count}</span>
+              </p>
+              <DashboardGraph
+                className="text-left"
+                chartData={it.data.map((it) => ({
+                  date: it.date,
+                  count: it.count,
+                }))}
+              />
             </div>
           ))}
         </div>
