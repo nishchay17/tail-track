@@ -1,3 +1,5 @@
+import { NextResponse } from "next/server";
+
 import { RequestBody } from "@/lib/schema";
 import { retry } from "@/lib/utils";
 import { validateAnalyticsBody } from "@/lib/validation";
@@ -11,7 +13,7 @@ export async function POST(request: Request) {
   try {
     body = await validateAnalyticsBody(request);
   } catch (error) {
-    return Response.json(
+    return NextResponse.json(
       { error: true, message: (error as Error).message },
       { status: 400 }
     );
@@ -20,10 +22,10 @@ export async function POST(request: Request) {
     await retry(async () => await analytics.track(body.namespace, body.meta));
   } catch (error) {
     console.error(error);
-    return Response.json(
+    return NextResponse.json(
       { error: true, message: "Something went wrong" },
       { status: 500 }
     );
   }
-  return Response.json({ error: false, message: "Successfully tracked" });
+  return NextResponse.json({ error: false, message: "Successfully tracked" });
 }

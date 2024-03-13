@@ -27,7 +27,7 @@ export function retry(
   maxRetries: number = 3,
   onRetry: (e: Error) => Boolean = () => true
 ) {
-  async function retryWithBackoff(retries: number) {
+  async function retryWithBackoff(retries: number): Promise<any> {
     try {
       if (retries > 0) {
         const timeToWait = 2 ** retries * 100;
