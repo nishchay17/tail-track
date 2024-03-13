@@ -16,8 +16,8 @@ const envVariables = z.object({
   POSTGRES_DATABASE: z.string(),
 
   NEXTAUTH_SECRET: z.string(),
-  AUTH_GITHUB_SECRET: z.string(),
-  AUTH_GITHUB_ID: z.string(),
+  GITHUB_SECRET: z.string(),
+  GITHUB_ID: z.string(),
 });
 
 try {
