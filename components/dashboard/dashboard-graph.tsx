@@ -39,7 +39,7 @@ function DashboardGraph({
   className: string;
 }) {
   return (
-    <ResponsiveContainer width="100%" aspect={2} className={className}>
+    <ResponsiveContainer width="100%" height="100%" className={className}>
       <BarChart
         margin={{ top: 0, left: 0, right: 0, bottom: 0 }}
         data={chartData}
