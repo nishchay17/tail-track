@@ -87,7 +87,7 @@ function AnalyticsDashboard({
 
   return (
     <>
-      <section>
+      <section className="pb-10">
         <h1 className="text-3xl font-semibold mb-4">Dashboard</h1>
         <div className="flex gap-4">
           {statsData.map((it) => (
@@ -103,12 +103,14 @@ function AnalyticsDashboard({
             </div>
           ))}
         </div>
+      </section>
+      <section className="pb-10">
         <div className="mt-4 grid grid-cols-2 gap-4">
           {cardData.map((it) => (
             <div
               key={it.name}
               className={cn(
-                "rounded-lg border-2 min-w-[200px] border-white/30 px-9 py-6 pl-1",
+                "rounded-lg border-2 w-full aspect-[2/1] border-white/30 px-9 py-6 pl-1",
                 it.custom ? "border-violet-500" : ""
               )}
             >
@@ -126,7 +128,6 @@ function AnalyticsDashboard({
           ))}
         </div>
       </section>
-      <section></section>
     </>
   );
 }
