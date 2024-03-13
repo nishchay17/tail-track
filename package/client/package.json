@@ -1,5 +1,5 @@
 {
-  "name": "client",
+  "name": "tail-track",
   "version": "1.0.0",
   "description": "",
   "main": "./dist/index.js",
@@ -13,9 +13,25 @@
     "build": "tsup",
     "test": "jest"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "typescript",
+    "track",
+    "analytics",
+    "client"
+  ],
+  "author": {
+    "name": "nishchay17",
+    "url": "https://www.nishchay17.com"
+  },
+  "license": "MIT",
+  "homepage": "https://github.com/nishchay17/tail-track",
+  "bugs": {
+    "url": "https://github.com/nishchay17/tail-track/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nishchay17/tail-track.git"
+  },
   "devDependencies": {
     "@types/jest": "^29.5.12",
     "jest": "^29.7.0",
