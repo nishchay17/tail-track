@@ -88,7 +88,7 @@ function AnalyticsDashboard({
   return (
     <>
       <section className="pb-10">
-        <h1 className="text-3xl font-semibold mb-4">Dashboard</h1>
+        <h2 className="text-3xl font-semibold mb-4">Dashboard</h2>
         <div className="flex gap-4">
           {statsData.map((it) => (
             <div

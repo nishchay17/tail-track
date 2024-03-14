@@ -2,37 +2,57 @@
 
 import { randomUUID } from "crypto";
 import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
 import { db } from "@/lib/db";
 import { apiKey } from "@/lib/db/schema";
 import { getCurrentUser } from "./user";
+import { apiTokenFormSchema, apiTokenFormType } from "@/lib/schema";
+import {
+  getErrorResult,
+  getSuccessResult,
+  handleDbError,
+  handleParseError,
+} from "@/util/returnUtil";
 
-export async function generateApiKey(name: string) {
+export async function generateApiKey({ name }: apiTokenFormType) {
+  let parsed;
+  try {
+    parsed = apiTokenFormSchema.parse({ name });
+  } catch (error) {
+    return handleParseError(error);
+  }
   try {
     const user = await getCurrentUser();
-    if (!user) return;
+    if (!user) return getErrorResult("User not found");
     await db.insert(apiKey).values({
       id: randomUUID(),
       token: randomUUID(),
-      name,
+      name: parsed.name,
       userId: user[0].id,
     });
+    revalidatePath("/dashboard/integrate");
+    return getErrorResult("Successfully created");
   } catch (error) {
-    console.error(error);
+    return handleDbError(error);
   }
 }
 
 export async function getApiKeys() {
-  const user = await getCurrentUser();
-  if (!user) return [];
-  return (
-    (await db
-      .select({
-        token: apiKey.token,
-        name: apiKey.name,
-        createdAt: apiKey.createdAt,
-      })
-      .from(apiKey)
-      .where(eq(apiKey.userId, user[0].id))) ?? []
-  );
+  try {
+    const user = await getCurrentUser();
+    if (!user) return getErrorResult("User not found");
+    const data =
+      (await db
+        .select({
+          token: apiKey.token,
+          name: apiKey.name,
+          createdAt: apiKey.createdAt,
+        })
+        .from(apiKey)
+        .where(eq(apiKey.userId, user[0].id))) ?? [];
+    return getSuccessResult<typeof data>({ data });
+  } catch (error) {
+    return handleDbError(error);
+  }
 }
