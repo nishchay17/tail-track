@@ -24,23 +24,26 @@ async function IntegratePage() {
           Integrate with TailTrack
         </h2>
       </section>
+      <AddApiKeyForm />
       {apikeys.data.length === 0 ? (
         <p>No API keys found</p>
       ) : (
-        apikeys.data.map((key) => (
-          <div
-            key={key.token}
-            className="flex gap-4 mb-4 border items-center border-white/30 p-4 rounded-lg"
-          >
-            <p className="capitalize text-lg">{key.name}</p>
-            <p className="px-4 py-2 rounded-lg bg-slate-800">{key.token}</p>
-            <Button variant="destructive" className="ml-auto">
-              Delete <Icons.close className="ml-2" />
-            </Button>
-          </div>
-        ))
+        <>
+          <p className="mb-4 text-xl font-medium">Your API keys</p>
+          {apikeys.data.map((key) => (
+            <div
+              key={key.token}
+              className="flex gap-4 mb-4 border items-center border-white/30 p-4 rounded-lg"
+            >
+              <p className="capitalize text-lg">{key.name}</p>
+              <p className="px-4 py-2 rounded-lg bg-slate-800">{key.token}</p>
+              <Button variant="destructive" size="icon" className="ml-auto">
+                <Icons.close />
+              </Button>
+            </div>
+          ))}
+        </>
       )}
-      <AddApiKeyForm />
     </>
   );
 }
