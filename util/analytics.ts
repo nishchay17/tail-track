@@ -2,6 +2,8 @@ import { parse } from "date-fns";
 
 import { redis } from "@/lib/redis";
 import { getDate } from "@/lib/utils";
+import { getCurrentUser } from "@/actions/user";
+import { signOut } from "@/lib/auth/auth-options";
 
 type TrackOptions = {
   persist?: boolean;
@@ -29,7 +31,14 @@ export class Analytics {
     if (!opts?.persist) await redis.expire(key, this.retention);
   }
 
-  async retrieveDays(userID: string, namespace: string, nDays: number) {
+  async retrieveDays(namespace: string, nDays: number) {
+    const user = await getCurrentUser();
+    if (!user) {
+      signOut();
+      return [];
+    }
+    const { id: userID } = user[0];
+
     const promises = Array(nDays)
       .fill(0)
       .map((_, idx) => {
