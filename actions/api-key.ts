@@ -1,7 +1,7 @@
 "use server";
 
 import { randomUUID } from "crypto";
-import { eq, and } from "drizzle-orm";
+import { eq, and, desc, count } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 import { db } from "@/lib/db";
@@ -25,6 +25,13 @@ export async function generateApiKey({ name }: apiTokenFormType) {
   try {
     const user = await getCurrentUser();
     if (!user) return getErrorResult("User not found");
+    const _count = await db
+      .select({ count: count() })
+      .from(apiKey)
+      .where(eq(apiKey.userId, user[0].id));
+    if (_count && _count[0].count >= 10)
+      return getErrorResult("Maximum number of API keys reached");
+
     await db.insert(apiKey).values({
       id: randomUUID(),
       token: randomUUID(),
@@ -50,7 +57,8 @@ export async function getApiKeys() {
           createdAt: apiKey.createdAt,
         })
         .from(apiKey)
-        .where(eq(apiKey.userId, user[0].id))) ?? [];
+        .where(eq(apiKey.userId, user[0].id))
+        .orderBy(desc(apiKey.createdAt))) ?? [];
     return getSuccessResult<typeof data>({ data });
   } catch (error) {
     return handleDbError(error);
