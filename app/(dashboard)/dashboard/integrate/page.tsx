@@ -1,9 +1,8 @@
-import { getApiKeys } from "@/actions/api-key";
-import AddApiKeyForm from "@/components/integrate/add-api-key-form";
+import { getApiKey } from "@/actions/api-key";
 import ApiTokenCard from "@/components/integrate/api-token-card";
 
 async function IntegratePage() {
-  const apikeys = await getApiKeys();
+  const apikeys = await getApiKey();
   if (apikeys.error) {
     return (
       <>
@@ -16,6 +15,7 @@ async function IntegratePage() {
       </>
     );
   }
+
   return (
     <>
       <section className="pb-10">
@@ -23,17 +23,7 @@ async function IntegratePage() {
           Integrate with TailTrack
         </h2>
       </section>
-      <AddApiKeyForm />
-      {apikeys.data.length === 0 ? (
-        <p>No API keys found</p>
-      ) : (
-        <>
-          <p className="mb-4 text-xl font-medium">Your API keys</p>
-          {apikeys.data.map((key) => (
-            <ApiTokenCard key={key.token} apiKey={key} />
-          ))}
-        </>
-      )}
+      <ApiTokenCard apiKey={apikeys.data[0]} />
     </>
   );
 }

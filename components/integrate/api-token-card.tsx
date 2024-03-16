@@ -1,43 +1,57 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-import { deleteAPIKey } from "@/actions/api-key";
+import { generateApiKey, recreateAPIKey } from "@/actions/api-key";
 import { Button } from "../ui/button";
-import { Icons } from "../ui/icons";
 import { useToast } from "../ui/use-toast";
 
-function ApiTokenCard({ apiKey }: { apiKey: { name: string; token: string } }) {
+function ApiTokenCard({ apiKey }: { apiKey: { token: string } }) {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
-  async function handleDelete() {
+
+  useEffect(() => {
+    async function create() {
+      if (!apiKey) {
+        await generateApiKey();
+      }
+    }
+    create();
+  }, [apiKey]);
+
+  async function handleRecreate() {
     setIsLoading(true);
-    const res = await deleteAPIKey(apiKey.token);
+    const res = await recreateAPIKey();
     if (res.error) {
       toast({
-        title: "Error while deleting API key",
+        title: "Error while recreating API key",
         description: res.message,
       });
     } else {
       toast({
-        title: "API key deleted",
+        title: "API key recreated",
       });
     }
     setIsLoading(false);
   }
+
   return (
     <div className="flex gap-4 mb-4 border items-center border-white/30 p-4 rounded-lg">
-      <p className="capitalize text-lg">{apiKey.name}</p>
-      <p className="px-4 py-2 rounded-lg bg-slate-800">{apiKey.token}</p>
-      <Button
-        variant="destructive"
-        size="icon"
-        className="ml-auto"
-        onClick={handleDelete}
-        disabled={isLoading}
-      >
-        <Icons.close />
-      </Button>
+      <p className="mb-4 text-xl font-medium">Your API keys</p>
+      {!apiKey ? (
+        <p>Creating a new API key for you</p>
+      ) : (
+        <>
+          <p className="px-4 py-2 rounded-lg bg-slate-800">{apiKey.token}</p>
+          <Button
+            className="ml-auto"
+            onClick={handleRecreate}
+            disabled={isLoading}
+          >
+            Recreate
+          </Button>
+        </>
+      )}
     </div>
   );
 }

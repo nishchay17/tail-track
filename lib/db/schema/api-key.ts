@@ -7,7 +7,13 @@ export const apiKey = pgTable("api-key", {
   userId: text("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
-  name: text("name").notNull(),
   token: text("token").notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
+
+export type APIKeyType = {
+  id: string;
+  userId: string;
+  token: string;
+  createdAt: Date;
+};

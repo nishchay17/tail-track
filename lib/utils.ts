@@ -2,6 +2,10 @@ import { z } from "zod";
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { format, subDays } from "date-fns";
+import { eq } from "drizzle-orm";
+
+import { db } from "./db";
+import { apiKey } from "./db/schema";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -45,4 +49,8 @@ export function retry(
     }
   }
   return retryWithBackoff(0);
+}
+
+export async function verifyAPIToken(token: string) {
+  return await db.select().from(apiKey).where(eq(apiKey.token, token));
 }

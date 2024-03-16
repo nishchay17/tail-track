@@ -37,7 +37,3 @@ export async function tailtrack({ namespace, meta }: AnalyticsParams) {
     return { error: true, message: "Something went wrong" };
   }
 }
-
-// tailtrack({ namespace: "test" }).then((res) => {
-//   console.log(res);
-// });

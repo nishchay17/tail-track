@@ -1,27 +1,19 @@
 "use server";
 
 import { randomUUID } from "crypto";
-import { eq, and, desc, count } from "drizzle-orm";
+import { eq, and, count } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 import { db } from "@/lib/db";
 import { apiKey } from "@/lib/db/schema";
 import { getCurrentUser } from "./user";
-import { apiTokenFormSchema, apiTokenFormType } from "@/lib/schema";
 import {
   getErrorResult,
   getSuccessResult,
   handleDbError,
-  handleParseError,
 } from "@/util/returnUtil";
 
-export async function generateApiKey({ name }: apiTokenFormType) {
-  let parsed;
-  try {
-    parsed = apiTokenFormSchema.parse({ name });
-  } catch (error) {
-    return handleParseError(error);
-  }
+export async function generateApiKey() {
   try {
     const user = await getCurrentUser();
     if (!user) return getErrorResult("User not found");
@@ -29,13 +21,12 @@ export async function generateApiKey({ name }: apiTokenFormType) {
       .select({ count: count() })
       .from(apiKey)
       .where(eq(apiKey.userId, user[0].id));
-    if (_count && _count[0].count >= 10)
-      return getErrorResult("Maximum number of API keys reached");
+    if (_count && _count[0].count >= 1)
+      return getErrorResult("One user can have only one API key");
 
     await db.insert(apiKey).values({
       id: randomUUID(),
       token: randomUUID(),
-      name: parsed.name,
       userId: user[0].id,
     });
     revalidatePath("/dashboard/integrate");
@@ -45,7 +36,7 @@ export async function generateApiKey({ name }: apiTokenFormType) {
   }
 }
 
-export async function getApiKeys() {
+export async function getApiKey() {
   try {
     const user = await getCurrentUser();
     if (!user) return getErrorResult("User not found");
@@ -53,25 +44,23 @@ export async function getApiKeys() {
       (await db
         .select({
           token: apiKey.token,
-          name: apiKey.name,
-          createdAt: apiKey.createdAt,
         })
         .from(apiKey)
-        .where(eq(apiKey.userId, user[0].id))
-        .orderBy(desc(apiKey.createdAt))) ?? [];
+        .where(eq(apiKey.userId, user[0].id))) ?? [];
     return getSuccessResult<typeof data>({ data });
   } catch (error) {
     return handleDbError(error);
   }
 }
 
-export async function deleteAPIKey(token: string) {
+export async function recreateAPIKey() {
   try {
     const user = await getCurrentUser();
     if (!user) return getErrorResult("User not found");
     await db
-      .delete(apiKey)
-      .where(and(eq(apiKey.userId, user[0].id), eq(apiKey.token, token)));
+      .update(apiKey)
+      .set({ token: randomUUID() })
+      .where(eq(apiKey.userId, user[0].id));
     revalidatePath("/dashboard/integrate");
     return getSuccessResult({ message: "deleted successfully", data: [] });
   } catch (error) {

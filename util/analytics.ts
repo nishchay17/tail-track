@@ -14,26 +14,27 @@ export class Analytics {
     if (opts?.retention) this.retention = opts.retention;
   }
 
-  getKey(namespace: string, date?: string) {
-    if (!date) return `analytics::${namespace}`;
-    return `analytics::${namespace}::${date}`;
+  getKey(userID: string, namespace: string, date?: string) {
+    return `${userID}::${namespace}::${date}`;
   }
 
-  async track(namespace: string, event: object = {}, opts?: TrackOptions) {
-    let key = this.getKey(namespace);
-    if (!opts?.persist) {
-      key = this.getKey(namespace, getDate());
-    }
+  async track(
+    userID: string,
+    namespace: string,
+    event: object = {},
+    opts?: TrackOptions
+  ) {
+    const key = this.getKey(userID, namespace, getDate());
     await redis.hincrby(key, JSON.stringify(event), 1);
     if (!opts?.persist) await redis.expire(key, this.retention);
   }
 
-  async retrieveDays(namespace: string, nDays: number) {
+  async retrieveDays(userID: string, namespace: string, nDays: number) {
     const promises = Array(nDays)
       .fill(0)
       .map((_, idx) => {
         const formattedDate = getDate(idx);
-        return analytics.retrieve(namespace, formattedDate);
+        return analytics.retrieve(userID, namespace, formattedDate);
       });
 
     try {
@@ -55,8 +56,8 @@ export class Analytics {
     }
   }
 
-  async retrieve(namespace: string, date: string) {
-    const key = this.getKey(namespace, date);
+  async retrieve(userID: string, namespace: string, date: string) {
+    const key = this.getKey(userID, namespace, date);
     const res = await redis.hgetall<Record<string, string>>(key);
     return {
       date,
