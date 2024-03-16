@@ -1,7 +1,7 @@
 import { ZodError } from "zod";
 
 export type ErrorResult = { error: true; message: string };
-export type SuccessResult<T> = { error: false; data: T; message?: string };
+export type SuccessResult<T> = { error: false; data?: T; message?: string };
 
 export function getErrorResult(message: string): ErrorResult {
   return { error: true, message };
@@ -11,7 +11,7 @@ export function getSuccessResult<T>({
   data,
   message,
 }: {
-  data: T;
+  data?: T;
   message?: string;
 }): SuccessResult<T> {
   return { error: false, data, message };

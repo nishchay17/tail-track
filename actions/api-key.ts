@@ -32,7 +32,7 @@ export async function generateApiKey({ name }: apiTokenFormType) {
       userId: user[0].id,
     });
     revalidatePath("/dashboard/integrate");
-    return getErrorResult("Successfully created");
+    return getSuccessResult({ message: "Successfully created" });
   } catch (error) {
     return handleDbError(error);
   }
