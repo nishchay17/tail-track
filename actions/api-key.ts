@@ -1,7 +1,7 @@
 "use server";
 
 import { randomUUID } from "crypto";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 
 import { db } from "@/lib/db";
@@ -52,6 +52,20 @@ export async function getApiKeys() {
         .from(apiKey)
         .where(eq(apiKey.userId, user[0].id))) ?? [];
     return getSuccessResult<typeof data>({ data });
+  } catch (error) {
+    return handleDbError(error);
+  }
+}
+
+export async function deleteAPIKey(token: string) {
+  try {
+    const user = await getCurrentUser();
+    if (!user) return getErrorResult("User not found");
+    await db
+      .delete(apiKey)
+      .where(and(eq(apiKey.userId, user[0].id), eq(apiKey.token, token)));
+    revalidatePath("/dashboard/integrate");
+    return getSuccessResult({ message: "deleted successfully", data: [] });
   } catch (error) {
     return handleDbError(error);
   }

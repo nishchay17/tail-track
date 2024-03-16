@@ -19,7 +19,10 @@ export function getSuccessResult<T>({
 
 export function handleParseError(error: any) {
   if (!(error as ZodError).isEmpty) {
-    return getErrorResult((error as ZodError).format()._errors.join(", "));
+    console.log((error as ZodError).flatten().fieldErrors);
+    return getErrorResult(
+      Object.values((error as ZodError).flatten().fieldErrors).join(", ")
+    );
   }
   return getErrorResult("Something went wrong");
 }

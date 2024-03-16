@@ -1,7 +1,6 @@
 import { getApiKeys } from "@/actions/api-key";
 import AddApiKeyForm from "@/components/integrate/add-api-key-form";
-import { Button } from "@/components/ui/button";
-import { Icons } from "@/components/ui/icons";
+import ApiTokenCard from "@/components/integrate/api-token-card";
 
 async function IntegratePage() {
   const apikeys = await getApiKeys();
@@ -31,16 +30,7 @@ async function IntegratePage() {
         <>
           <p className="mb-4 text-xl font-medium">Your API keys</p>
           {apikeys.data.map((key) => (
-            <div
-              key={key.token}
-              className="flex gap-4 mb-4 border items-center border-white/30 p-4 rounded-lg"
-            >
-              <p className="capitalize text-lg">{key.name}</p>
-              <p className="px-4 py-2 rounded-lg bg-slate-800">{key.token}</p>
-              <Button variant="destructive" size="icon" className="ml-auto">
-                <Icons.close />
-              </Button>
-            </div>
+            <ApiTokenCard key={key.token} apiKey={key} />
           ))}
         </>
       )}

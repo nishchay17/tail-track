@@ -9,22 +9,25 @@ import { useToast } from "../ui/use-toast";
 
 function AddApiKeyForm() {
   const [name, setName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
 
   async function onSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setIsLoading(true);
     const res = await generateApiKey({ name });
     if (res.error) {
       toast({
         title: "Error while creating API key",
         description: res.message,
       });
-      return;
+    } else {
+      toast({
+        title: "API key created",
+      });
+      setName("");
     }
-    toast({
-      title: "API key created",
-    });
-    setName("");
+    setIsLoading(false);
   }
 
   return (
@@ -40,7 +43,7 @@ function AddApiKeyForm() {
         onChange={(e) => setName(e.target.value)}
         className="bg-background max-w-sm"
       />
-      <Button className="mt-3" type="submit">
+      <Button className="mt-3" type="submit" disabled={isLoading}>
         Submit
       </Button>
     </form>
