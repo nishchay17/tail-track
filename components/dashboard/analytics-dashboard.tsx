@@ -1,6 +1,15 @@
+"use client";
+
 import { cn } from "@/lib/utils";
 import { RetrieveDaysReturnType } from "@/util/analytics";
 import DashboardGraph from "./dashboard-graph";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 type dataPoint = {
   date: string;
@@ -11,9 +20,11 @@ type dataPoint = {
 function AnalyticsDashboard({
   tracks,
   trackingDays,
+  namespaces,
 }: {
   tracks: RetrieveDaysReturnType;
   trackingDays: number;
+  namespaces: string[];
 }) {
   const tracksByDate: dataPoint[] = tracks.reduce((acc: dataPoint[], curr) => {
     return [
@@ -85,10 +96,26 @@ function AnalyticsDashboard({
     },
   ];
 
+  function onNamespaceChange(value: any) {
+    console.log(value);
+  }
+
   return (
     <>
       <section className="pb-10">
         <h2 className="text-3xl font-semibold mb-4">Dashboard</h2>
+        <Select onValueChange={onNamespaceChange} defaultValue={namespaces[0]}>
+          <SelectTrigger className="w-[180px]">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {namespaces.map((it) => (
+              <SelectItem key={it} value={it}>
+                {it}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
         <div className="flex gap-4">
           {statsData.map((it) => (
             <div
