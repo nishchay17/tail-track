@@ -41,7 +41,7 @@ function AnalyticsDashboardWrapper({
         namespaces={namespaces}
         onNamespaceChange={onNamespaceChange}
       />
-      <AnalyticsDashboard tracks={mockTracker} trackingDays={trackingDays} />
+      <AnalyticsDashboard tracks={_tracks} trackingDays={trackingDays} />
     </>
   );
 }
