@@ -26,6 +26,7 @@ import {
   BarChart3,
   Blocks,
   PieChart,
+  Star,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -107,4 +108,5 @@ export const Icons = {
   barChart: BarChart3,
   blocks: Blocks,
   logout: LogOut,
+  star: Star,
 };

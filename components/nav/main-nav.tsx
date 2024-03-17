@@ -14,14 +14,18 @@ interface MainNavProps {
   children?: ReactNode;
 }
 
-export function MainNav({ items, children }: MainNavProps) {
+export function MainNav({
+  items,
+  children,
+  className,
+}: MainNavProps & { className?: string }) {
   const segment = useSelectedLayoutSegment();
 
   return (
-    <div className="flex gap-6 md:gap-10">
+    <div className={cn("flex gap-6 md:gap-10", className)}>
       <Link href="#" className="hidden items-center space-x-2 md:flex">
-        <Icons.logo />
-        <span className="hidden font-urban text-xl font-bold sm:inline-block">
+        <Icons.logo className="h-5 w-5" />
+        <span className="hidden text-lg font-semibold sm:inline-block">
           {siteConfig.name}
         </span>
       </Link>

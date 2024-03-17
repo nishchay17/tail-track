@@ -7,6 +7,7 @@ import AnalyticsDashboard from "./analytics-dashboard";
 import { RetrieveDaysReturnType, analytics } from "@/util/analytics";
 import { getAnalytics } from "@/actions/analytics";
 import { useToast } from "../ui/use-toast";
+import { mockTracker } from "@/config/mock";
 
 function AnalyticsDashboardWrapper({
   namespaces,
@@ -40,7 +41,7 @@ function AnalyticsDashboardWrapper({
         namespaces={namespaces}
         onNamespaceChange={onNamespaceChange}
       />
-      <AnalyticsDashboard tracks={_tracks} trackingDays={trackingDays} />
+      <AnalyticsDashboard tracks={mockTracker} trackingDays={trackingDays} />
     </>
   );
 }
