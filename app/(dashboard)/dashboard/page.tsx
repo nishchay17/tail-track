@@ -1,6 +1,6 @@
 import { analytics } from "@/util/analytics";
-import AnalyticsDashboard from "@/components/dashboard/analytics-dashboard";
 import { getNamespaces } from "@/actions/namespace";
+import AnalyticsDashboardWrapper from "@/components/dashboard/analytics-dashboard-wrapper";
 
 export const metadata = {
   title: "Dashboard",
@@ -21,11 +21,12 @@ export default async function Page() {
     namespaces.data[0],
     TRACKING_DAYS
   );
+
   return (
-    <AnalyticsDashboard
+    <AnalyticsDashboardWrapper
+      namespaces={namespaces.data}
       tracks={tracks}
       trackingDays={TRACKING_DAYS}
-      namespaces={namespaces.data}
     />
   );
 }
