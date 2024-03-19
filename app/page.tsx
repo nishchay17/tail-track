@@ -14,7 +14,6 @@ import { useToast } from "@/components/ui/use-toast";
 export default function Home() {
   const [_, copyToClipboard] = useCopyToClipboard();
   const { toast } = useToast();
-  const _code = ``;
 
   return (
     <main>
