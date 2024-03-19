@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 import Link from "next/link";
-import { useSelectedLayoutSegment } from "next/navigation";
+import { usePathname, useSelectedLayoutSegment } from "next/navigation";
 
 import { MainNavItem } from "@/types";
 import { siteConfig } from "@/config/site";
@@ -20,10 +20,14 @@ export function MainNav({
   className,
 }: MainNavProps & { className?: string }) {
   const segment = useSelectedLayoutSegment();
+  const pathname = usePathname();
 
   return (
     <div className={cn("flex gap-6 md:gap-10", className)}>
-      <Link href="#" className="items-center space-x-2 flex">
+      <Link
+        href={pathname.startsWith("/dashboard") ? "#" : "/"}
+        className="items-center space-x-2 flex"
+      >
         <Icons.logo className="h-5 w-5" />
         <span className="hidden text-lg font-semibold sm:inline-block">
           {siteConfig.name}
@@ -36,7 +40,7 @@ export function MainNav({
               key={index}
               href={item.disabled ? "#" : item.href}
               className={cn(
-                "flex items-center text-base md:text-lg font-medium transition-colors hover:text-foreground/80 sm:text-sm",
+                "flex items-center text-sm md:text-base font-medium transition-colors hover:text-foreground/80",
                 item.href.startsWith(`/${segment}`)
                   ? "text-foreground"
                   : "text-foreground/60",
