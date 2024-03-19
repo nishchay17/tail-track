@@ -18,6 +18,8 @@ const envVariables = z.object({
   NEXTAUTH_SECRET: z.string(),
   GITHUB_SECRET: z.string(),
   GITHUB_ID: z.string(),
+
+  ADMIN_ID_ARRAY: z.string().optional(),
 });
 
 try {
