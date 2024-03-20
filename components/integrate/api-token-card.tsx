@@ -12,7 +12,7 @@ function ApiTokenCard({
   demo = false,
 }: {
   apiKey: { token: string };
-  demo: boolean;
+  demo?: boolean;
 }) {
   const { toast } = useToast();
   const [_, setCopiedText] = useCopyToClipboard();
