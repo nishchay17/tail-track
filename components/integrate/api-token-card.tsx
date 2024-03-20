@@ -5,9 +5,11 @@ import { useEffect, useState } from "react";
 import { generateApiKey, recreateAPIKey } from "@/actions/api-key";
 import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
+import { useCopyToClipboard } from "@/hooks/use-copy";
 
 function ApiTokenCard({ apiKey }: { apiKey: { token: string } }) {
   const { toast } = useToast();
+  const [_, setCopiedText] = useCopyToClipboard();
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -36,15 +38,25 @@ function ApiTokenCard({ apiKey }: { apiKey: { token: string } }) {
   }
 
   return (
-    <div className="flex gap-4 mb-4 border items-center border-white/30 p-4 rounded-lg">
+    <div className="mb-4 border border-white/30 p-4 rounded-lg">
       <p className="mb-4 text-xl font-medium">Your API keys</p>
       {!apiKey ? (
         <p>Creating a new API key for you</p>
       ) : (
         <>
-          <p className="px-4 py-2 rounded-lg bg-slate-800">{apiKey.token}</p>
+          <p
+            className="px-4 py-2 rounded-lg bg-slate-800 cursor-pointer w-fit"
+            onClick={() => {
+              setCopiedText(apiKey.token);
+              toast({
+                title: "Copied to clipboard!",
+              });
+            }}
+          >
+            {apiKey.token}
+          </p>
           <Button
-            className="ml-auto"
+            className="mt-4"
             onClick={handleRecreate}
             disabled={isLoading}
           >

@@ -20,7 +20,7 @@ async function IntegratePage() {
     <>
       <section className="pb-10">
         <h2 className="text-3xl font-semibold mb-4">
-          Integrate with TailTrack
+          Integrate with Tail Track
         </h2>
       </section>
       <ApiTokenCard apiKey={apikeys.data[0]} />
