@@ -7,7 +7,13 @@ import { Button } from "../ui/button";
 import { useToast } from "../ui/use-toast";
 import { useCopyToClipboard } from "@/hooks/use-copy";
 
-function ApiTokenCard({ apiKey }: { apiKey: { token: string } }) {
+function ApiTokenCard({
+  apiKey,
+  demo = false,
+}: {
+  apiKey: { token: string };
+  demo: boolean;
+}) {
   const { toast } = useToast();
   const [_, setCopiedText] = useCopyToClipboard();
   const [isLoading, setIsLoading] = useState(false);
@@ -22,6 +28,7 @@ function ApiTokenCard({ apiKey }: { apiKey: { token: string } }) {
   }, [apiKey]);
 
   async function handleRecreate() {
+    if (demo) return;
     setIsLoading(true);
     const res = await recreateAPIKey();
     if (res.error) {
