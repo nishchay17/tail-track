@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
@@ -146,15 +146,21 @@ export default function Home() {
     ],
     [toast, copyToClipboard]
   );
-  const interval = useRef(0);
-  useEffect(() => {
+  const interval = useRef<null | number>(null);
+  const handleTimer = useCallback(() => {
+    if (interval.current) clearInterval(interval.current);
     interval.current = window.setInterval(() => {
       setCurrectSetupCardIdx((i) => (i + 1) % steps.length);
     }, 4000);
-    return () => {
-      clearInterval(interval.current);
-    };
   }, [steps]);
+  useEffect(() => {
+    if (!isMobile) handleTimer();
+    return () => {
+      if (interval.current) {
+        clearInterval(interval.current);
+      }
+    };
+  }, [handleTimer, isMobile]);
 
   return (
     <main>
@@ -241,9 +247,7 @@ export default function Home() {
       </motion.section>
       <div className="container max-w-[1000px]">
         <motion.div
-          style={
-            !isMobile ? { translateY: imageTranslateY, scale: imageScale } : {}
-          }
+          style={{ translateY: imageTranslateY, scale: imageScale }}
           className="hidden sm:block mt-48 border border-white/20 rounded-lg will-change-transform"
         >
           <Image
@@ -254,7 +258,7 @@ export default function Home() {
           />
         </motion.div>
       </div>
-      <section id="setup" className="container max-w-[1200px]">
+      <section id="setup" className="container px-4 md:px-8 max-w-[1200px]">
         <div className="px-10 my-20 md:mb-36 md:mt-20 py-8 border border-white/20 rounded-lg">
           <h2 className="text-3xl lg:text-4xl font-medium mb-2">Easy setup</h2>
           <p className="opacity-70 mb-16">
@@ -271,10 +275,7 @@ export default function Home() {
                   )}
                   onClick={() => {
                     setCurrectSetupCardIdx(idx);
-                    clearInterval(interval.current);
-                    interval.current = window.setInterval(() => {
-                      setCurrectSetupCardIdx((i) => (i + 1) % steps.length);
-                    }, 4000);
+                    handleTimer();
                   }}
                 >
                   <p className="text-lg opacity-70">Step {idx + 1}:</p>
@@ -282,7 +283,7 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <div className="relative flex items-center justify-center border border-white/20 border-b-0 rounded-t-lg -my-8 overflow-hidden bg-[222.2_84%_4.9%]">
+            <div className="hidden relative md:flex items-center justify-center border border-white/20 border-b-0 rounded-t-lg -my-8 overflow-hidden bg-[222.2_84%_4.9%]">
               <div className="-z-10 absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f4e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f4e_1px,transparent_1px)] bg-[size:14px_14px]" />
               <AnimatePresence>
                 {steps.map(
