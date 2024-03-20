@@ -45,7 +45,7 @@ function ApiTokenCard({
   }
 
   return (
-    <div className="mb-4 border border-white/30 p-4 rounded-lg">
+    <div className="mb-4 border border-white/30 p-4 rounded-lg bg-background">
       <p className="mb-4 text-xl font-medium">Your API keys</p>
       {!apiKey ? (
         <p>Creating a new API key for you</p>

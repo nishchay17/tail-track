@@ -116,7 +116,7 @@ export default function Home() {
               });
             }}
             variant="ghost"
-            className="py-2 px-4 border border-white/20 rounded-full mb-6 active:border-white/40 hover:bg-white/10 active:bg-white/20"
+            className="py-2 px-4 border border-white/20 rounded-full mb-6 active:border-white/40 bg-background!"
           >
             {">"} npm install tail-track
           </Button>
@@ -282,7 +282,8 @@ export default function Home() {
                 </div>
               ))}
             </div>
-            <div className="flex items-center justify-center border border-white/20 border-b-0 rounded-t-lg -my-8 overflow-hidden bg-[222.2_84%_4.9%]">
+            <div className="relative flex items-center justify-center border border-white/20 border-b-0 rounded-t-lg -my-8 overflow-hidden bg-[222.2_84%_4.9%]">
+              <div className="-z-10 absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f4e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f4e_1px,transparent_1px)] bg-[size:14px_14px]" />
               <AnimatePresence>
                 {steps.map(
                   (it, idx) =>
