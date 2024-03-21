@@ -1,6 +1,10 @@
 import { getApiKey } from "@/actions/api-key";
 import ApiTokenCard from "@/components/integrate/api-token-card";
 
+export const metadata = {
+  title: "Integrate",
+};
+
 async function IntegratePage() {
   const apikeys = await getApiKey();
   if (apikeys.error) {
