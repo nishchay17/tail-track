@@ -7,7 +7,7 @@ export const siteConfig: SiteConfig = {
   description:
     "Tail track: A open source custom event tracker for your next project.",
   url: site_url,
-  ogImage: `${site_url}/og.jpg`,
+  ogImage: `${site_url}/landing.png`,
   links: {
     twitter: "",
     github: "",
