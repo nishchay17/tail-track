@@ -20,6 +20,8 @@ const envVariables = z.object({
   GITHUB_ID: z.string(),
 
   ADMIN_ID_ARRAY: z.string().optional(),
+
+  TRACKER_TOKEN: z.string(),
 });
 
 try {
