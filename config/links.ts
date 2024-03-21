@@ -11,9 +11,4 @@ export const sideNavLinks: SidebarNavItem[] = [
     href: "/dashboard/integrate",
     icon: "blocks",
   },
-  {
-    title: "Settings",
-    href: "/dashboard/settings",
-    icon: "settings",
-  },
 ];
