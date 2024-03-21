@@ -9,7 +9,7 @@ export const mockTracker = Array(7)
     date: getDate(idx),
     events: [
       { '{"country":"us"}': randomCount(idx) },
-      { '{"country":"india"}': randomCount(idx) },
+      { '{"country":"india"}': randomCount(idx) - 1 },
       { "{}": randomCount(idx) },
       { '{"ref":"resume"}': randomCount(idx) },
     ],

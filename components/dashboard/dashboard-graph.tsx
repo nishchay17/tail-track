@@ -1,12 +1,12 @@
 "use client";
 
 import {
-  BarChart,
   XAxis,
   YAxis,
-  Bar,
   ResponsiveContainer,
   Tooltip,
+  LineChart,
+  Line,
 } from "recharts";
 
 const CustomTooltip = ({
@@ -19,9 +19,15 @@ const CustomTooltip = ({
   label?: string;
 }) => {
   if (active && payload && payload.length) {
+    console.log(payload);
     return (
-      <div className="bg-zinc-800 px-2 py-3 rounded-lg border border-white/10">
-        <p>{`${label} : ${payload[0].value}`}</p>
+      <div className="bg-zinc-800 px-3 py-2 rounded-lg border border-white/10">
+        <p className="text-sm border-b">{label}</p>
+        {payload.map((it: any) => (
+          <p key={it.name}>
+            {it.name}: {it.value}
+          </p>
+        ))}
       </div>
     );
   }
@@ -31,24 +37,44 @@ const CustomTooltip = ({
 function DashboardGraph({
   chartData,
   className,
+  lines,
 }: {
   chartData: {
-    date: number | string;
-    count: number | string | null;
+    [key: string]: number | string | null;
   }[];
   className: string;
+  lines: string[];
 }) {
+  const _chartData = chartData.map((it) => {
+    const filled = it;
+    lines.forEach((it) => {
+      if (!filled[it]) {
+        filled[it] = 0;
+      }
+    });
+    return filled;
+  });
   return (
     <ResponsiveContainer width="100%" height="100%" className={className}>
-      <BarChart
+      <LineChart
         margin={{ top: 0, left: 0, right: 0, bottom: 0 }}
-        data={chartData}
+        data={_chartData}
       >
         <XAxis dataKey="date" />
         <YAxis />
         <Tooltip content={<CustomTooltip />} cursor={{ fill: "transparent" }} />
-        <Bar dataKey="count" fill="#8b5cf6" barSize={30} />
-      </BarChart>
+
+        {lines.map((it) => (
+          <Line
+            key={it}
+            dataKey={it}
+            stroke="#8b5cf6"
+            type="monotone"
+            strokeWidth={2}
+            dot={{ display: "none" }}
+          />
+        ))}
+      </LineChart>
     </ResponsiveContainer>
   );
 }
