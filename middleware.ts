@@ -29,7 +29,7 @@ export default async function middleware(req: NextRequest) {
 
   if (req.nextUrl.pathname === "/") {
     analytics
-      .track(process.env.TRACKER_TOKEN, "tail-track", {
+      .track(process.env.ADMIN_ID!, "tail-track", {
         country: req.geo?.country,
       })
       .catch(console.error);
