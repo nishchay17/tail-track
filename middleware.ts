@@ -32,6 +32,7 @@ export default async function middleware(req: NextRequest) {
       .track(process.env.ADMIN_ID!, "tail-track", {
         country: req.geo?.country,
       })
+      .then(console.log)
       .catch(console.error);
   }
 
