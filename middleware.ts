@@ -26,14 +26,10 @@ export default async function middleware(req: NextRequest) {
       );
     }
   }
-
   if (req.nextUrl.pathname === "/") {
-    analytics
-      .track(process.env.ADMIN_ID!, "tail-track", {
-        country: req.geo?.country,
-      })
-      .then(console.log)
-      .catch(console.error);
+    await analytics.track(process.env.ADMIN_ID!, "tail-track", {
+      country: req.geo?.country,
+    });
   }
 
   return NextResponse.next();
