@@ -4,6 +4,7 @@ import { rateLimiter } from "./lib/rate-limiter";
 
 export default async function middleware(req: NextRequest) {
   const ip = req.headers.get("x-forwarded-for");
+  const agent = req.headers.get("user-agent");
 
   if (req.nextUrl.pathname.startsWith("/api/v1")) {
     const { success, limit, reset, remaining } = await rateLimiter.limit(
@@ -26,7 +27,10 @@ export default async function middleware(req: NextRequest) {
       );
     }
   }
-  if (req.nextUrl.pathname === "/") {
+
+  // during development, vecerl uses bots to take screenshots
+  // causing additional requests to be made
+  if (req.nextUrl.pathname === "/" && !agent?.includes("vercel")) {
     await analytics.track(process.env.ADMIN_ID!, "tail-track", {
       country: req.geo?.country,
     });
