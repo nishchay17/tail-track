@@ -33,6 +33,7 @@ export default async function middleware(req: NextRequest) {
   if (req.nextUrl.pathname === "/" && !agent?.includes("vercel")) {
     await analytics.track(process.env.ADMIN_ID!, "tail-track", {
       country: req.geo?.country,
+      ref: req.nextUrl.searchParams.get("ref") ?? "direct",
     });
   }
 
