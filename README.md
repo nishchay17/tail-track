@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Tail-track
 
-## Getting Started
+[![Website](https://img.shields.io/website?label=Website&url=https://tail-track.vercel.app/)](https://tail-track.vercel.app?ref=readme) [![GitHub License](https://img.shields.io/github/license/nishchay17/tail-track)](https://github.com/nishchay17/tail-track/blob/main/LICENSE)
 
-First, run the development server:
+![opengraph-image](https://github.com/nishchay17/tail-track/assets/48904113/040ffc16-8137-4e3d-8835-d389313093be)
+
+## Table of Contents
+
+- [About](#about)
+- [Features](#features)
+- [Setting up the project](#setting-up)
+- [License](#license)
+
+## About
+
+Welcome to my custom analytics platform. This platform is your ultimate companion for tracking personal project events, like page visits or any other custom event. Gain valuable insights and optimize your progress effortlessly using the out of box package or directly through our API endpoint.
+
+## Features
+
+1. **Server-Side Rendering (SSR)**: The website uses SSR to provide fast-loading, SEO-friendly pages with improved user experience.
+2. **Responsive Design**: The website is designed to be responsive, ensuring a seamless experience on various devices and screen sizes.
+
+## Setting up
+
+To start this project in your machine, follow these steps:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+# Clone the repository
+git clone https://github.com/nishchay17/tail-track.git
+
+# Change directory
+cd tail-track
+
+# Install dependencies
+pnpm i
+
+# Start the development server
 pnpm dev
-# or
-bun dev
 ```
+Add environment variables, given under __lib/env.ts__
+> without these variables your project won't start!
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## License
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+This project is licensed under the [MIT License](https://github.com/nishchay17/planet-blog/blob/main/LICENSE).
