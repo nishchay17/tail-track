@@ -1,4 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
+import { isbot } from "isbot";
+
 import { analytics } from "@/util/analytics";
 import { rateLimiter } from "./lib/rate-limiter";
 
@@ -28,9 +30,7 @@ export default async function middleware(req: NextRequest) {
     }
   }
 
-  // during development, vecerl uses bots to take screenshots
-  // causing additional requests to be made
-  if (req.nextUrl.pathname === "/" && !agent?.includes("vercel")) {
+  if (req.nextUrl.pathname === "/" && !isbot(agent) && req.method === "GET") {
     await analytics.track(process.env.ADMIN_ID!, "tail-track", {
       country: req.geo?.country,
       ref: req.nextUrl.searchParams.get("ref") ?? "direct",
