@@ -95,7 +95,7 @@ function AnalyticsDashboard({
         </div>
       </section>
       <section className="pb-10">
-        <div className="mt-4 grid grid-cols-2 gap-4">
+        <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
           <AnalyticsGraphCard
             lines={["count"]}
             points={tracksByDate}
