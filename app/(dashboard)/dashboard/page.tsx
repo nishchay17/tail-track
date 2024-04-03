@@ -1,6 +1,7 @@
 import { analytics } from "@/util/analytics";
 import { getNamespaces } from "@/actions/namespace";
 import AnalyticsDashboardWrapper from "@/components/dashboard/analytics-dashboard-wrapper";
+import EmptyAnalytics from "@/components/dashboard/empty-analytics";
 
 export const metadata = {
   title: "Dashboard",
@@ -13,7 +14,7 @@ export default async function Page() {
     return <p>{namespaces.message}</p>;
   }
   if (namespaces.data.length === 0) {
-    return <p>No namespace found</p>;
+    return <EmptyAnalytics />;
   }
   const tracks = await analytics.retrieveDays(
     namespaces.data[0],
