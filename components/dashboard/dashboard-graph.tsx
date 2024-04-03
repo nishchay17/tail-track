@@ -19,7 +19,6 @@ const CustomTooltip = ({
   label?: string;
 }) => {
   if (active && payload && payload.length) {
-    console.log(payload);
     return (
       <div className="bg-zinc-800 px-3 py-2 rounded-lg border border-white/10">
         <p className="text-sm border-b">{label}</p>

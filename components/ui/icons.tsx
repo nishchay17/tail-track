@@ -10,7 +10,6 @@ import {
   HelpCircle,
   Image,
   Laptop,
-  Loader2,
   LucideProps,
   Moon,
   MoreVertical,
@@ -27,6 +26,7 @@ import {
   Blocks,
   PieChart,
   Star,
+  RotateCw,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -83,7 +83,7 @@ export const Icons = {
   post: FileText,
   search: Search,
   settings: Settings,
-  spinner: Loader2,
+  spinner: RotateCw,
   sun: SunMedium,
   trash: Trash,
   twitter: ({ ...props }: LucideProps) => (
