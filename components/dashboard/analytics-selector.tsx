@@ -47,6 +47,7 @@ function AnalyticsSelector({
           <Icons.spinner
             className={cn("h-4 w-4", refetching && "animate-spin")}
           />
+          <span className="sr-only">Refresh analytics</span>
         </Button>
       </div>
     </>
