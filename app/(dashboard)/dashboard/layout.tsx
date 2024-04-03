@@ -13,13 +13,13 @@ async function DashboardLayout({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <div className="flex min-h-screen flex-col space-y-6">
+    <div className="flex min-h-screen flex-col">
       <NavBar user={user} items={[]} />
-      <div className="container grid flex-1 gap-8 lg:gap-12 md:grid-cols-[auto_1fr] lg:grid-cols-[200px_1fr]">
-        <aside className="hidden w-full flex-col md:flex">
+      <div className="md:grid-cols-[auto_1fr] lg:grid-cols-[200px_1fr]">
+        <aside className="fixed top-16 h-full left-0 hidden md:w-[150px] lg:w-[200px] flex-col md:flex px-4 bg-muted/20 border-r pt-6">
           <DashboardNav items={sideNavLinks} />
         </aside>
-        <main className="flex w-full flex-1 flex-col overflow-hidden">
+        <main className="flex flex-1 flex-col overflow-hidden md:ml-[150px] lg:ml-[200px] mt-6 px-8 lg:px-12">
           {children}
         </main>
       </div>
