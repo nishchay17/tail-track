@@ -65,7 +65,7 @@ function ApiTokenCard({
           <Button
             className="mt-4"
             onClick={handleRecreate}
-            disabled={isLoading}
+            isLoading={isLoading}
           >
             Recreate
           </Button>

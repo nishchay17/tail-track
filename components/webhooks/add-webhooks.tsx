@@ -205,7 +205,7 @@ function AddWebhooks() {
                 />
               </div>
               <Button
-                disabled={form.formState.isSubmitting}
+                isLoading={form.formState.isSubmitting}
                 type="submit"
                 className="mt-8"
               >

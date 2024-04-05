@@ -52,7 +52,7 @@ function DeleteWebhooks({ id }: { id: number }) {
         <div className="mt-4 flex justify-end gap-2">
           <Button onClick={() => setOpen(false)}>Cancel</Button>
           <Button
-            disabled={isLoading}
+            isLoading={isLoading}
             variant="destructive"
             onClick={handleDelete}
           >

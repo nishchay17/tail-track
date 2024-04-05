@@ -28,6 +28,7 @@ import {
   Star,
   RotateCw,
   Webhook,
+  LoaderCircle,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -111,4 +112,5 @@ export const Icons = {
   logout: LogOut,
   star: Star,
   webhook: Webhook,
+  loader: LoaderCircle,
 };
