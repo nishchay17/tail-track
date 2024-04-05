@@ -11,4 +11,9 @@ export const sideNavLinks: SidebarNavItem[] = [
     href: "/dashboard/integrate",
     icon: "blocks",
   },
+  {
+    title: "Webhooks",
+    href: "/dashboard/webhooks",
+    icon: "webhook",
+  },
 ];

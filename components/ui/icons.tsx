@@ -27,6 +27,7 @@ import {
   PieChart,
   Star,
   RotateCw,
+  Webhook,
 } from "lucide-react";
 
 export type Icon = LucideIcon;
@@ -109,4 +110,5 @@ export const Icons = {
   blocks: Blocks,
   logout: LogOut,
   star: Star,
+  webhook: Webhook,
 };
