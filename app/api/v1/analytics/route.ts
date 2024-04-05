@@ -43,17 +43,16 @@ export async function POST(request: Request) {
   }
 
   try {
-    await retry(
-      async () =>
-        await inngest.send({
-          name: "tail-track/track",
-          data: {
-            namespace: body.namespace,
-            userId: token[0].userId,
-            meta: body.meta,
-          },
-        })
-    );
+    await retry(async () => {
+      await inngest.send({
+        name: "tail-track/track",
+        data: {
+          namespace: body.namespace,
+          userId: token[0].userId,
+          meta: body.meta,
+        },
+      });
+    });
   } catch (err) {
     console.error("error in inngest: ", err);
     return NextResponse.json({ error: true, message: "Something went wrong" });
