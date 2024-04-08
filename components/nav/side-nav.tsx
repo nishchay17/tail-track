@@ -40,7 +40,7 @@ export function DashboardNav({ items }: DashboardNavProps) {
                   item.disabled && " opacity-80"
                 )}
               >
-                <Icon className="mr-2 size-4" />
+                <Icon className="mr-2 w-5" />
                 <span>{item.title}</span>
               </span>
             </Link>
