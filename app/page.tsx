@@ -222,27 +222,16 @@ export default function Home() {
           >
             Start for free
           </Button>
-          <Button
-            asChild
-            variant="outline"
-            size="sm"
-            className=" border-violet-600"
-          >
-            <Link
-              href="https://github.com/nishchay17/tail-track"
-              target="_blank"
-            >
+          <Link href="https://github.com/nishchay17/tail-track" target="_blank">
+            <Button variant="outline" size="sm" className=" border-violet-600">
               Give a star <Icons.star size={14} className="ml-2" />
-            </Link>
-          </Button>
-          <Button
-            asChild
-            className=" border-violet-600"
-            variant="outline"
-            size="sm"
-          >
-            <Link href="/demo">Live demo</Link>
-          </Button>
+            </Button>
+          </Link>
+          <Link href="/demo">
+            <Button className=" border-violet-600" variant="outline" size="sm">
+              Live demo
+            </Button>
+          </Link>
         </motion.div>
       </motion.section>
       <div className="container max-w-[1000px]">
